@@ -1,5 +1,7 @@
 
-//statically build the inner HTML of the deck
+var moveCounter = document.querySelector('.moves');
+var moves = 0;  //move counter
+//statically built the inner HTML of the deck
 var cards = ['<i class="fa fa-motorcycle fa-lg"></i>',
             '<i class="fa fa-motorcycle fa-lg"></i>',
             '<i class="fa fa-truck fa-lg"></i>',
@@ -33,11 +35,11 @@ function deal(cards) {
   makeClickable(firstCard);
   var nextCard = firstCard
 
-  //iterate through the deck by 'next sibling'
+  //iterate through the deck by 'nextElementSibling'
   for (var i = 1; i < cards.length; i++) {
     nextCard = nextCard.nextElementSibling;
     nextCard.innerHTML = cards[i];
-    makeClickable(nextCard);  //method to add event listeners
+    makeClickable(nextCard);  //add event listeners with compare function
   }
 }
 
@@ -46,32 +48,52 @@ function makeClickable(card) {
   //TODO: user should only click to show, not both
   card.addEventListener('click', function(){
     if (card.className === 'card'){
-      //TODO: add to the open card list
       card.className = 'card show';
+      //add comparison at time of event listen
       compare(card);
+      //TODO: throw in sleep command for the player
     } else {
-      card.className = 'card';
+      //delete this once you fix the game logic
+      //displays when a showing card is clicked again
+      console.log('error');
     }
   });
 }
 
+//game logic:
+//Overall: This is iterative and launched on each card mouse click
+//1. If even, puts the card in the faceUp stack
+//2. Otherwise, peaks the stack and compares innerHTML
+//3. If they match, push the card to stackoverflow
+//4. If they don't match, pop the stack
+//5. In both outcomes, increment the moves counter
+//6. Check if the stack === 16, if so, player wins, if not, continue
 function compare(card) {
-  //if empty or even numbered
-  if (faceUp.length === 0 || (faceUp.length % 2 ===0)) {
+  if (faceUp.length === 0 || faceUp.length % 2 === 0) {
+    //pushes first card for comparison into the array
     faceUp.push(card);
-    // console.log(card);
-    // console.log(faceUp.value);
   } else {
-    for (var i = 0; i < faceUp.length; i++) {
-      if (card.innerHTML === faceUp[i].innerHTML) {
+    //takes the newly selected card and compares to the last card
+    //credit to stackoverflow at: https://stackoverflow.com/questions/1141302
+    setTimeout(function(){ //should delay comparison by 1 sec
+      if (faceUp[faceUp.length - 1].innerHTML === card.innerHTML){
         console.log('match');
+        faceUp.push(card);
       } else {
-        console.log('mismatch');
-      }
-    }
-  }
+        console.log('no match');
+        //TODO: sleep for 1 second...much harder in Javascript than I thought
 
+        card.className = 'card';
+        faceUp[faceUp.length - 1].className = 'card';
+        faceUp.pop();
+      }
+    }, 1000);
+    moves++;
+  }
+  moveCounter.innerHTML = moves;
+  console.log(moves);
 }
+
 
 // Shuffle function, slightly modified from http://stackoverflow.com/a/2450976
 function shuffle(array) {
