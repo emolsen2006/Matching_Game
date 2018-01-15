@@ -26,12 +26,18 @@ var cards = ['<i class="fa fa-motorcycle fa-lg"></i>',
             '<i class="fa fa-tree fa-lg"></i>',
             '<i class="fa fa-tree fa-lg"></i>'];
 
+
+
 //starts and resets the game
 deal(cards);
+
+
 
 //shuffles, sets innerHTML, and adds mouse EventListener
 function deal(cards) {
   moves = 0; //reset move counter
+  moveCounter.innerHTML = moves; //update display
+  startTime = getTime();
   resetStars();
   shuffle(cards); //shuffle function below
   //beccause of the DOM lookup, the first card is special
@@ -154,5 +160,15 @@ function winGame(){
   var finishTime = getTime() - startTime;
   var minutes = Math.floor(finishTime % (1000 * 60 * 60) / (1000 * 60));
   var seconds = Math.floor(finishTime % (1000 * 60) / 1000);
-  console.log(minutes + ' minutes ' + seconds + ' seconds');
+  var gameData = 'You won in ' + minutes + ' minutes ' + seconds
+  + ' seconds and in ' + moves + 'moves' ;
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('game-data').innerHTML = gameData;
+
+  var btn = document.getElementById('play-button');
+  btn.addEventListener('click', function() {
+    document.getElementById('overlay').style.display = 'none';
+    deal(cards);
+  })
+
 }
