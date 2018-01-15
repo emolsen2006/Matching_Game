@@ -62,15 +62,30 @@ h1 {
 }
 
 .deck .card:hover{
-  box-shadow:  0px 0px 60px 8px rgba(215,214,24,1);
+  box-shadow:  0px 0px 60px 8px rgba(209, 208, 79, 1);
 }
 
 .deck .card.show {
-    font-size: 33px;
-    list-style: none;
-    text-align: center;
-    /*is there no way to vertically center?*/
-    padding-top: 40px
+  transform: rotateY(180deg);
+  transition: 0.6s;
+	 /* transform-style: preserve-3d; */
+  font-size: 33px;
+  color: #151618;
+  background-color: #12ad9e;
+  list-style: none;
+  text-align: center;
+  padding-top: 40px /*is there no way to vertically center?*/
+}
+
+.deck .card.match {
+  /*vibrate animation */
+  cursor: default;
+  background: #d1eb31
+  color: #151618;
+  list-style: none;
+  text-align: center;
+  padding-top: 40px
+  font-size: 33px;
 }
 
 /*score panel*/
