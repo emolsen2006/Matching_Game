@@ -48,11 +48,12 @@ h1 {
 }
 
 .deck .card {
+
   height: 125px;
   width: 125px;
   background: #120e20;
   font-size: 0; /*to make it disapper???*/
-  color: white;
+  color: #fff;
   border-radius: 8px;
   cursor: pointer;
   display: flex
@@ -65,27 +66,46 @@ h1 {
   box-shadow:  0px 0px 60px 8px rgba(209, 208, 79, 1);
 }
 
-.deck .card.show {
+.deck .card.open {
   transform: rotateY(180deg);
   transition: 0.6s;
-	 /* transform-style: preserve-3d; */
-  font-size: 33px;
-  color: #151618;
   background-color: #12ad9e;
+  cursor: default;
   list-style: none;
+  color: #c9c9c9;
+  font-size: 33px;
+  padding-top: 40px;
   text-align: center;
-  padding-top: 40px /*is there no way to vertically center?*/
 }
 
 .deck .card.match {
   /*vibrate animation */
+  transform: rotateY(180deg);
   cursor: default;
-  background: #d1eb31
+  background: #a551f9;
   color: #151618;
   list-style: none;
   text-align: center;
-  padding-top: 40px
+  padding-top: 40px;
   font-size: 33px;
+}
+
+.deck .card.mismatch {
+  /*vibrate animation */
+  transform: rotateY(180deg);
+  transition: 0.6s;
+  cursor: default;
+  background: #fa312a;
+  color: #151618;
+  list-style: none;
+  text-align: center;
+  padding-top: 40px;
+  font-size: 33px;
+}
+
+.deck .card.return {
+  transform: rotateY(180deg);
+  cursor: default;
 }
 
 /*score panel*/
@@ -106,6 +126,7 @@ h1 {
   list-style: none;
   display: inline-block;
   float: left;
+  color: #384071;
 }
 
 .score-panel .restart {
