@@ -37,8 +37,9 @@ deal(cards);
 function deal(cards) {
   moves = 0; //reset move counter
   moveCounter.innerHTML = moves; //update display
-  startTime = getTime();
-  resetStars();
+  startTime = getTime(); //reset the timer
+  resetStars(); //painful reset of starts
+  faceUp.length = 0; //reset the faceUp list
   shuffle(cards); //shuffle function below
   //beccause of the DOM lookup, the first card is special
   var firstCard = document.querySelector('.deck').firstElementChild;
@@ -86,7 +87,7 @@ function compare(card) {
         card.className = 'card match';  //match CSS
         faceUp.push(card);  //push newly matched card onto array
         //if array equals 16, declare victory for player
-        if (faceUp.length === 2) {
+        if (faceUp.length === 16) {
           winGame();
         }
         firstCard, secondCard = true; //unlock the first and second card
@@ -135,14 +136,14 @@ reset.addEventListener('click', function(){
 function updateStars(moves){
   if (moves > 28) {
     star1.style.display = 'none';
-  } else if (moves > 24) {
+  } else if (moves > 22) {
     star2.style.display = 'none';
-  } else if (moves > 20) {
+  } else if (moves > 18) {
    star3.style.display = 'none';
   }
 }
 
-//this makes me think that using javascript for inline styling is not good
+//this makes me think that using javascript for inline styling is not good design
 function resetStars() {
   star1.style.display = '';
   star2.style.display = '';
@@ -163,11 +164,13 @@ function winGame(){
   var gameData = 'You won in ' + minutes + ' minutes ' + seconds
   + ' seconds and in ' + moves + 'moves' ;
   document.getElementById('overlay').style.display = 'block';
+  document.getElementById('overlay-container').style.display = 'block';
   document.getElementById('game-data').innerHTML = gameData;
 
   var btn = document.getElementById('play-button');
   btn.addEventListener('click', function() {
     document.getElementById('overlay').style.display = 'none';
+    document.getElementById('overlay-container').style.display = 'none';
     deal(cards);
   })
 
