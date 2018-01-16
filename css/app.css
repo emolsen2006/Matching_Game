@@ -1,7 +1,6 @@
 html {
   box-sizing: border-box;
 }
-/*need to figure out what this did*/
 
 *,
 *::before,
@@ -19,7 +18,9 @@ body {
 }
 
 body {
-  background: url(/img/images.jpg);
+  /* Lesson learned, you use the .. to reference child directories */
+  background: url("../img/images.jpg");
+
 }
 
 .container {
@@ -43,7 +44,7 @@ h1 {
   box-shadow: 12px 15px 20px 0 rgba(41,61,73,0.5);
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /*?????*/
+  justify-content: space-between; /*????? */
   align-items: center;
   margin: 0 0 3em;
 }
@@ -52,6 +53,7 @@ h1 {
 
   height: 125px;
   width: 125px;
+  margin-top: 25px; /* seems to help with Internet Explorer */
   background: #120e20;
   font-size: 0; /*makes it invisible*/
   color: #fff;
