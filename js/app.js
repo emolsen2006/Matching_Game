@@ -95,15 +95,19 @@ function compare(card) {
         //Step 3: Cards don't match and both are flipped back over
         //use setTimeout function for phased shift of CSS class
         setTimeout(function(){
-          card.className = 'card'; //flips the card back over
-          faceUp[faceUp.length - 1].className = 'card'; //flip card over
-          faceUp.pop(); //remove from array for new comparison
-          firstCard, secondCard = true; //unlock cards
-        }, 600);
+          setTimeout(function() {
+            card.className = 'card'; //flips the card back over
+            faceUp[faceUp.length - 1].className = 'card'; //flip card over
+            faceUp.pop(); //remove from array for new comparison
+            firstCard, secondCard = true; //unlock cards
+          }, 400);
+          card.className = 'card return';
+          faceUp[faceUp.length - 1].className = 'card return';
+        }, 400);
         card.className = 'card mismatch';
         faceUp[faceUp.length - 1].className = 'card mismatch';
       }
-    }, 1000); //1,000 delays card flip by 1 second
+    }, 1200); //1,000 delays card flip by 1 second
     moves++;  //increment move counter, works for matches and mis-matches
   }
   moveCounter.innerHTML = moves;  //update HTML tag with new moves
