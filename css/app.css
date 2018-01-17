@@ -257,7 +257,7 @@ header strong {
 }
 
 /*most normal cell phones (360-420 pixel-width)*/
- @media only screen and (min-width: 700px) and (max-width: 1040px) {
+ @media only screen and (min-width: 700px) /*and (max-width: 1040px)*/ {
   .deck {
     width: 710px;
     min-height: 680px;
