@@ -5,7 +5,11 @@ var firstCard, secondCard = true; //control measure for fast clickers
 var star1 = document.getElementById('star1');
 var star2 = document.getElementById('star2');
 var star3 = document.getElementById('star3');
-var startTime = getTime();
+var startTime;
+var timerDisplay = document.querySelector('#timer');
+var gameWon = false;
+var firstClick = false;
+var gameReset = false;
 
 var faceUp = []; //our face-up array for matching
 //statically built the inner HTML of the deck
@@ -31,17 +35,16 @@ var cards = ['<i class="fa fa-motorcycle fa-lg"></i>',
 //starts and resets the game
 deal(cards);
 
-
-
 //shuffles, sets innerHTML, and adds mouse EventListener
 function deal(cards) {
   moves = 0; //reset move counter
   moveCounter.innerHTML = moves; //update display
-  startTime = getTime(); //reset the timer
+  firstClick = false; //reset timer start event
   resetStars(); //painful reset of starts
   faceUp.length = 0; //reset the faceUp list
   shuffle(cards); //shuffle function below
-  //beccause of the DOM lookup, the first card is special
+
+  //beccause of the DOM lookup, the first card gets special treatement
   var firstCard = document.querySelector('.deck').firstElementChild;
   firstCard.innerHTML = cards[0];
   firstCard.className = 'card'; //used during the reset button
@@ -61,18 +64,25 @@ function deal(cards) {
 function makeClickable(card) {
   card.addEventListener('click', function(){
     if (card.className === 'card'){
-      if(firstCard || secondCard){    //locks card flip when checking for match
+      if(firstCard || secondCard){    //locks card flip for a third card
         card.className = 'card open'; //flips the card for display
         compare(card); //comparison and main game logic
       }
     } else {
-      //displays when a showing card is clicked again
-      console.log('already flipped');
+      // console.log('already flipped');
     }
   });
 }
 
+//main game logic generated from mouseclick event listener
 function compare(card) {
+  //if the first click, lock the firstClick boolean, start the timer, and clear reset lock
+  if (!firstClick) {
+    firstClick = true;
+    startTime = getTime()
+    startTimer();
+    gameReset = false;
+  }
   //Step 1: Flip an initial card for comparison
   if (faceUp.length === 0 || faceUp.length % 2 === 0) { //is empty or even
     faceUp.push(card);  //pushes first card for comparison into the array
@@ -87,7 +97,8 @@ function compare(card) {
         card.className = 'card match';  //match CSS
         faceUp.push(card);  //push newly matched card onto array
         //if array equals 16, declare victory for player
-        if (faceUp.length === 16) {
+        if (faceUp.length === 2) {
+          gameWon = true;
           winGame();
         }
         firstCard, secondCard = true; //unlock the first and second card
@@ -132,9 +143,11 @@ function shuffle(array) {
 //set reset event
 var reset = document.getElementById('restart')
 reset.addEventListener('click', function(){
-  deal(cards);  //re-deal the hands
+  gameReset = true;
   moveCounter.innerHTML = 0;  //reset the move counter
-  //TODO: reset the game timer when built
+  timerDisplay.innerHTML = '0:00';
+  deal(cards);  //re-deal the hands
+
 });
 
 function updateStars(moves){
@@ -155,18 +168,43 @@ function resetStars() {
 }
 
 //for time calculations
-function getTime(){
+function getTime() {
   var date = new Date()
   var time = date.getTime();
   return time;
 }
 
-function winGame(){
+//may need to generate a first mouse click event
+function startTimer() {
+  console.log('firstClick: ' + firstClick);
+  if (firstClick) {
+    var timer = setInterval(function() {
+      var now = getTime();
+      var distance = now - startTime;
+      var minutes = Math.floor(distance % (1000 * 60 * 60) / (1000 * 60));
+      var seconds = Math.floor(distance % (1000 * 60) / 1000);
+      //create leading zero
+      if (seconds < 10) {
+        seconds = '0' + seconds; //a strongly typed language would never allow this
+      }
+      //update html timer
+      if (!gameReset) {
+        timerDisplay.innerHTML = minutes + ':' + seconds;
+      }
+      if (gameWon){
+        clearInterval(timer);
+        timerDisplay.innerHTML = '0:00';
+      }
+    }, 1000);
+  }
+}
+
+function winGame() {
   var finishTime = getTime() - startTime;
   var minutes = Math.floor(finishTime % (1000 * 60 * 60) / (1000 * 60));
   var seconds = Math.floor(finishTime % (1000 * 60) / 1000);
   var gameData = 'You won in ' + minutes + ' minutes ' + seconds
-  + ' seconds and in ' + moves + 'moves' ;
+  + ' seconds and in ' + moves + ' moves' ;
   document.getElementById('overlay').style.display = 'block';
   document.getElementById('overlay-container').style.display = 'block';
   document.getElementById('game-data').innerHTML = gameData;
@@ -176,6 +214,7 @@ function winGame(){
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('overlay-container').style.display = 'none';
     deal(cards);
+    gameWon = false;
   })
 
 }

@@ -35,6 +35,10 @@ h1 {
   text-align: center;
 }
 
+header strong {
+  font-size: 2em;
+}
+
 .deck {
   width: 660px;
   min-height: 680px;
