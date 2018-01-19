@@ -1,19 +1,19 @@
 
-var moveCounter = document.querySelector('.moves');
-var moves = 0;  //move counter
-var firstCard, secondCard = true; //control measure for fast clickers
-var star1 = document.getElementById('star1');
-var star2 = document.getElementById('star2');
-var star3 = document.getElementById('star3');
-var startTime;
-var timerDisplay = document.querySelector('#timer');
-var gameWon = false;
-var firstClick = false;
-var gameReset = false;
+const moveCounter = document.querySelector('.moves');
+let moves = 0;  //move counter
+let firstCard, secondCard = true; //control measure for fast clickers
+const star1 = document.getElementById('star1');
+const star2 = document.getElementById('star2');
+const star3 = document.getElementById('star3');
+let startTime;
+const timerDisplay = document.querySelector('#timer');
+let gameWon = false;
+let firstClick = false;
+let gameReset = false;
 
-var faceUp = []; //our face-up array for matching
+const faceUp = []; //our face-up array for matching
 //statically built the inner HTML of the deck
-var cards = ['<i class="fa fa-motorcycle fa-lg"></i>',
+const cards = ['<i class="fa fa-motorcycle fa-lg"></i>',
             '<i class="fa fa-motorcycle fa-lg"></i>',
             '<i class="fa fa-truck fa-lg"></i>',
             '<i class="fa fa-truck fa-lg"></i>',
@@ -45,14 +45,14 @@ function deal(cards) {
   shuffle(cards); //shuffle function below
 
   //beccause of the DOM lookup, the first card gets special treatement
-  var firstCard = document.querySelector('.deck').firstElementChild;
+  const firstCard = document.querySelector('.deck').firstElementChild;
   firstCard.innerHTML = cards[0];
   firstCard.className = 'card'; //used during the reset button
   makeClickable(firstCard);
-  var nextCard = firstCard
+  let nextCard = firstCard
 
   //iterate through the deck by 'nextElementSibling'
-  for (var i = 1; i < cards.length; i++) {
+  for (let i = 1; i < cards.length; i++) {
     nextCard = nextCard.nextElementSibling;
     nextCard.className = 'card';  //used during the rest button
     nextCard.innerHTML = cards[i];
@@ -127,9 +127,9 @@ function compare(card) {
 
 // Shuffle function, slightly modified from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-  var currentIndex = array.length;
-  var temp;
-  var randomIndex;
+  let currentIndex = array.length;
+  let temp;
+  let randomIndex;
   while (currentIndex !==0){
     randomIndex = Math.floor(Math.random() * currentIndex); //returns 0-16
     currentIndex--;
@@ -141,7 +141,7 @@ function shuffle(array) {
 }
 
 //set reset event
-var reset = document.getElementById('restart')
+const reset = document.getElementById('restart')
 reset.addEventListener('click', function(){
   gameReset = true;
   moveCounter.innerHTML = 0;  //reset the move counter
@@ -181,8 +181,8 @@ function getStars() {
 
 //for time calculations
 function getTime() {
-  var date = new Date()
-  var time = date.getTime();
+  let date = new Date()
+  let time = date.getTime();
   return time;
 }
 
@@ -190,11 +190,11 @@ function getTime() {
 function startTimer() {
   console.log('firstClick: ' + firstClick);
   if (firstClick) {
-    var timer = setInterval(function() {
-      var now = getTime();
-      var distance = now - startTime;
-      var minutes = Math.floor(distance % (1000 * 60 * 60) / (1000 * 60));
-      var seconds = Math.floor(distance % (1000 * 60) / 1000);
+    let timer = setInterval(function() {
+      let now = getTime();
+      let distance = now - startTime;
+      let minutes = Math.floor(distance % (1000 * 60 * 60) / (1000 * 60));
+      let seconds = Math.floor(distance % (1000 * 60) / 1000);
       //create leading zero
       if (seconds < 10) {
         seconds = '0' + seconds; //a strongly typed language would never allow this
@@ -212,17 +212,25 @@ function startTimer() {
 }
 
 function winGame() {
-  var finishTime = getTime() - startTime;
-  var minutes = Math.floor(finishTime % (1000 * 60 * 60) / (1000 * 60));
-  var seconds = Math.floor(finishTime % (1000 * 60) / 1000);
-  var gameData = 'You won in ' + minutes + ' minutes ' + seconds
+  let finishTime = getTime() - startTime;
+  let minutes = Math.floor(finishTime % (1000 * 60 * 60) / (1000 * 60));
+  let seconds = Math.floor(finishTime % (1000 * 60) / 1000);
+  let stars = 'stars!';
+  //inner function for the quirks of the English language
+  //this could become very complicated in Russian
+  if (getStars() === 1) {
+    stars = 'star!';
+  }
+  let gameData = 'You won in ' + minutes + ' minutes ' + seconds
   + ' seconds and in ' + moves + ' moves! You also earned ' + getStars()
-  + ' stars!' ;
+  + ' ' + stars;
   document.getElementById('overlay').style.display = 'block';
   document.getElementById('overlay-container').style.display = 'block';
   document.getElementById('game-data').innerHTML = gameData;
 
-  var btn = document.getElementById('play-button');
+
+  //reset button
+  const btn = document.getElementById('play-button');
   btn.addEventListener('click', function() {
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('overlay-container').style.display = 'none';
