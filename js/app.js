@@ -156,7 +156,7 @@ function updateStars(moves){
   } else if (moves > 22) {
     star2.style.display = 'none';
   } else if (moves > 18) {
-   star3.style.display = 'none';
+    star3.style.display = 'none';
   }
 }
 
@@ -165,6 +165,18 @@ function resetStars() {
   star1.style.display = '';
   star2.style.display = '';
   star3.style.display = '';
+}
+
+function getStars() {
+  if (moves > 28) {
+    return 0;
+  }else if (moves > 22) {
+    return 1;
+  }else if (moves > 18) {
+    return 2;
+  } else {
+    return 3;
+  }
 }
 
 //for time calculations
@@ -204,7 +216,8 @@ function winGame() {
   var minutes = Math.floor(finishTime % (1000 * 60 * 60) / (1000 * 60));
   var seconds = Math.floor(finishTime % (1000 * 60) / 1000);
   var gameData = 'You won in ' + minutes + ' minutes ' + seconds
-  + ' seconds and in ' + moves + ' moves' ;
+  + ' seconds and in ' + moves + ' moves! You also earned ' + getStars()
+  + ' stars!' ;
   document.getElementById('overlay').style.display = 'block';
   document.getElementById('overlay-container').style.display = 'block';
   document.getElementById('game-data').innerHTML = gameData;

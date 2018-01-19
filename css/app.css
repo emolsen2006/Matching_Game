@@ -166,6 +166,10 @@ header strong {
   z-index: 3;
 }
 
+#thumbs-up {
+  color: #afbf2a;
+}
+
 #overlay h1 {
   color: #fff;
   font-size: 2em;
@@ -280,37 +284,7 @@ header strong {
   .score-panel {
     padding-right: 10px;
   }
-  .deck .card:hover{
+  /* .deck .card:hover{
     box-shadow:  0px 0px 10px 2px rgba(209, 208, 79, 1);
-  }
+  } */
 }
-
-/*laptop / monitor displays (wide and not tall)*/
-/*
- @media only screen and (min-width: 1041px) {
-  .deck {
-    width: 710px;
-    min-height: 680px;
-    padding: 32px;
-  }
-  .deck .card {
-    height: 135px;
-    width: 135px;
-    margin-top: 49px;
-  }
-  .deck .card.open {
-    font-size: 2.5em;
-  }
-  .deck .card.match {
-    font-size: 2.5em;
-  }
-  .deck .card.mismatch {
-    font-size: 2.5em;
-  }
-  .score-panel {
-    padding-right: 10px;
-  }
-  .deck .card:hover{
-    box-shadow:  0px 0px 10px 2px rgba(209, 208, 79, 1);
-  }
-} */
