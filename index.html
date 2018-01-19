@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"> <!-- unused provided by emmet-->
   <link rel="stylesheet" href="css/app.css">
+  <!-- Initially attempted to link awesome fonts offline; turns out this is much easier -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!--wasn't working, I think it needs an ajax script to work like this-->
-  <!--<link rel="stylesheet" href="/css/font-awesome.min.css">-->
   <title>Matching Game</title>
 </head>
+
 <body>
+
   <div class="container">
+    <!-- I build the overlay before reading about modals, will do that in the future -->
+    <!--CSS will display the overlay div upon winning the game -->
     <div id="overlay">
       <div id="overlay-container">
         <div id="thumbs-up" class="fa fa-thumbs-up fa-5x"></div>
@@ -21,25 +25,33 @@
         <button id="play-button" type="button">Play Again</button>
       </div>
     </div>
+
     <header>
       <h1>Matching Game</h1>
     </header>
+
+    <!-- The text on this top part was very tricky; not sure if this is up to
+        standard for the project's submission requirements -->
     <strong>Timer: <span id="timer">0:00</span></strong>
     <section class="score-panel">
 
       <ul class="stars">
-        <li><i id="star1" class="fa fa-star fa-lg"></i></li>
-        <li><i id="star2" class="fa fa-star fa-lg"></i></li>
-        <li><i id="star3" class="fa fa-star fa-lg"></i></li>
+        <li><i id="star1" class="fa fa-star fa-2x"></i></li>
+        <li><i id="star2" class="fa fa-star fa-2x"></i></li>
+        <li><i id="star3" class="fa fa-star fa-2x"></i></li>
       </ul>
 
       <strong>Moves: <span class="moves fa-lg">0</span></strong>
 
       <div id="restart" class="restart fa-lg">
-        <i class="fa fa-repeat"></i>
+        <i class="fa fa-repeat fa-lg"></i>
       </div>
+
+    <!-- Main game interface, the deck and the cards -->
     </section>
     <ul class="deck">
+      <!-- Javascript will switch between CSS class for desired decoration -->
+      <!-- "card" is synonomous with being face down-->
       <li class="card"></li>
       <li class="card"> </li>
       <li class="card"></li>
