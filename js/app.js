@@ -166,9 +166,7 @@ reset.addEventListener('click', function(){ //event listener added to reset icon
 
 //player evaluation criteria...I'll let my boys know if this is fair
 function updateStars(moves){
-  if (moves > 28) {
-    star1.style.display = 'none';
-  } else if (moves > 22) {
+  if (moves > 22) {
     star2.style.display = 'none';
   } else if (moves > 18) {
     star3.style.display = 'none';
@@ -184,9 +182,7 @@ function resetStars() {
 
 //fetches number of stars for string output on the winning menu
 function getStars() {
-  if (moves > 28) {
-    return 0;
-  }else if (moves > 22) {
+  if (moves > 22) {
     return 1;
   }else if (moves > 18) {
     return 2;
